@@ -1,73 +1,29 @@
 class Solution {
 public:
     int reversePairs(vector<int>& nums) {
-        return team(nums, nums.size());
-
-    }
-    void merge(vector<int> &arr, int low, int mid, int high) {
-    vector<int> temp; // temporary array
-    int left = low;      // starting index of left half of arr
-    int right = mid + 1;   // starting index of right half of arr
-
-    //storing elements in the temporary array in a sorted manner//
-
-    while (left <= mid && right <= high) {
-        if (arr[left] <= arr[right]) {
-            temp.push_back(arr[left]);
-            left++;
-        }
-        else {
-            temp.push_back(arr[right]);
-            right++;
-        }
+        return mergesort(nums, 0, nums.size()-1);
     }
 
-    // if elements on the left half are still left //
-
-    while (left <= mid) {
-        temp.push_back(arr[left]);
-        left++;
-    }
-
-    //  if elements on the right half are still left //
-    while (right <= high) {
-        temp.push_back(arr[right]);
-        right++;
-    }
-
-    // transfering all elements from temporary to arr //
-    for (int i = low; i <= high; i++) {
-        arr[i] = temp[i - low];
-    }
-}
-
-int countPairs(vector<int> &nums, int low, int mid, int high) {
-    int j=mid+1, count=0;
-        while(low <= mid && j <= high){
-            if((long)nums[low] > (long) 2 * nums[j]){
-                count += (mid - low + 1);
-                j++;
-            }else{
-                low++;
-            }
-        }
+    int mergesort(vector<int> & nums, int start, int end){
+        int count=0;
+        if(start>=end) return count;
+        int mid=(start+end)/2;
+        count+=mergesort(nums,start, mid);
+        count+=mergesort(nums,mid+1, end);
+        count+=merge(nums, start, mid, end);
         return count;
-}
+    }
 
-int mergeSort(vector<int> &arr, int low, int high) {
-    int cnt = 0;
-    if (low >= high) return cnt;
-    int mid = (low + high) / 2 ;
-    cnt += mergeSort(arr, low, mid);  // left half
-    cnt += mergeSort(arr, mid + 1, high); // right half
-    cnt += countPairs(arr, low, mid, high); //Modification
-    merge(arr, low, mid, high);  // merging sorted halves
-    return cnt;
-}
+    int merge(vector<int> & nums, int start, int mid, int end){
+        int left=start, right=mid+1, count=0;
 
-int team(vector <int> & skill, int n)
-{
-    return mergeSort(skill, 0, n - 1);
-}
-
+        while(left <= mid && right <= end){
+            if((long) nums[left] > (long) 2*nums[right] ){
+                count+=mid-left+1;
+                right++;
+            }else left++;
+        }
+        sort(nums.begin()+start, nums.begin()+end+1);
+        return count;
+    }
 };
