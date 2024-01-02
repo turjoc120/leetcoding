@@ -12,17 +12,15 @@
 class Solution {
 public:
     vector<int> rightSideView(TreeNode* root) {
-        map<int,int>mp;
         vector<int> ans;
-        helper(root, mp, 0);
-        for(auto i: mp) ans.push_back(i.second);
+        helper(root, ans,0);
         return ans;
     }
 
-    void helper(TreeNode* root, map<int,int> &mp, int hlvl){
+    void helper(TreeNode* root, vector<int> &ans, int lvl){
         if(root==NULL) return;
-        mp[hlvl]=root->val;
-        helper(root->left, mp, hlvl+1);
-        helper(root->right,mp, hlvl+1);
+        if(ans.size()==lvl)ans.push_back(root->val);
+        helper(root->right,ans,lvl+1);
+        helper(root->left,ans,lvl+1);
     }
 };
