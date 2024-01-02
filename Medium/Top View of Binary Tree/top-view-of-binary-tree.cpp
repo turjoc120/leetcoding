@@ -104,22 +104,20 @@ class Solution
     //from left to right in Binary Tree.
     vector<int> topView(Node *root)
     {
-       map<int, int>mp;
-       queue<pair<Node*, int>>q;
-       q.push({root, 0});
-       
-       while(!q.empty()){
-           Node* temp = q.front().first;
-           int vlvl= q.front().second;
-           q.pop();
-           if(mp.find(vlvl) == mp.end()) mp[vlvl] = temp->data;
-           if(temp->left) q.push({temp->left, vlvl-1});
-           if(temp->right) q.push({temp->right, vlvl+1});
-       }
-       
-       vector<int> ans;
-       for(auto i: mp) ans.push_back(i.second);
+       map<int, pair<int, int>>mp;
+       preorder(root, mp, 0,0);
+       vector<int>ans;
+       for(auto i: mp) ans.push_back(i.second.first);
        return ans;
+    }
+    
+    void preorder(Node* root, map<int, pair<int, int>> &mp, int vlvl, int hlvl){
+        if(root==NULL) return;
+        if(mp.find(vlvl) == mp.end() || mp[vlvl].second > hlvl) 
+            mp[vlvl] = {root->data, hlvl};
+        preorder(root->left, mp, vlvl-1, hlvl+1);    
+        preorder(root->right, mp, vlvl+1, hlvl+1);    
+        
     }
 
 };
