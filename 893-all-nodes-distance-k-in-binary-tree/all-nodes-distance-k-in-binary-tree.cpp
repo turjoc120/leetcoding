@@ -12,27 +12,29 @@ public:
     unordered_map<TreeNode*, TreeNode*> parent;
     unordered_set<TreeNode*> vis;
 
-    void getParent(TreeNode* root, TreeNode* prev){
-        if(root == NULL) return;
-        parent[root]=prev;
-        getParent(root->left, root);
-        getParent(root->right, root);
+    void getParents(TreeNode* root, TreeNode* prev){
+        if(root==NULL) return;
+        parent[root]= prev;
+        getParents(root->left, root);    
+        getParents(root->right, root);    
     }
 
-    void helper(TreeNode* target, vector<int> &ans, int k){
-        if(target==NULL) return;
-        if(vis.find(target) != vis.end()) return;
+    void helper(TreeNode*target, int k, vector<int> &ans){
+        if(target == NULL || vis.find(target) != vis.end()) return;
         vis.insert(target);
-        if(k==0) ans.push_back(target->val);
-        helper(target->left, ans, k-1);
-        helper(target->right, ans, k-1);
-        helper(parent[target], ans, k-1);
+        if(k == 0){
+            ans.push_back(target->val);
+            return;
+        }
+        helper(target->left, k-1, ans);
+        helper(target->right, k-1, ans);
+        helper(parent[target], k-1, ans);
     }
 
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-        vector<int> ans;
-        getParent(root, NULL);
-        helper(target, ans, k);
+        vector<int>ans;
+        getParents(root, NULL);
+        helper(target, k, ans);
         return ans;
     }
 };
