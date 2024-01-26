@@ -11,21 +11,17 @@
  */
 class Solution {
 public:
-    TreeNode* prev = NULL;
-    void preorder(TreeNode* root){
-        if(root==NULL) return;
-        if(prev){
-            prev->right = root;
-            prev->left = NULL;
-        }
-        TreeNode* rightNode=root->right;
-        prev = root;
-        preorder(root->left);
-        preorder(rightNode);
-    }
-
     void flatten(TreeNode* root) {
-        if(root==NULL) return;
-        preorder(root);
+        TreeNode* curr=root;
+
+        while(curr != NULL){
+            if(curr->left ==NULL)curr = curr->right;else {
+                TreeNode* prev = curr->left;
+                while(prev->right) prev = prev->right;
+                prev->right = curr->right;
+                curr->right = curr-> left;
+                curr->left = NULL;
+            }
+        }
     }
 };
