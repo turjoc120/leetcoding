@@ -97,14 +97,32 @@ struct Node {
 class Solution
 {
     public:
-    int kthLargest(Node *root, int &k)
+    int kthLargest(Node *root, int k)
     {
-        if(root==NULL) return -1;
-        int right = kthLargest(root->right, k);
-        if(right != -1) return right; 
-        k--;
-        if(k == 0) return root->data;
-        return kthLargest(root->left, k);
+        Node* curr = root;
+        int kthLargest, count =0;
+        
+        while(curr != NULL){
+            if(curr->right == NULL){
+                if(++count == k) kthLargest = curr->data;
+                curr = curr->left;
+            }
+            else{
+                Node* succ = curr->right;
+                while(succ->left != NULL && succ->left != curr) 
+                    succ = succ ->left;
+                if(succ->left == NULL){
+                    succ->left = curr;
+                    curr = curr->right;
+                }
+                else{
+                    succ->left = NULL;
+                    if(++count == k) kthLargest = curr->data;
+                    curr = curr->left;
+                }
+            }
+        }
+        return kthLargest;
     }
 };
 
