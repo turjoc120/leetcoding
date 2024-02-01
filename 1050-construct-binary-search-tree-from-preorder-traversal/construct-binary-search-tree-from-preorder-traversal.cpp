@@ -11,17 +11,17 @@
  */
 class Solution {
 public:
-    TreeNode* helper(vector<int> &pre, long minVal, long maxVal, int &i){
+    TreeNode* helper(vector<int> &pre, long maxVal, int &i){
         if(i > pre.size()-1) return NULL;
-        if(pre[i] >= maxVal || pre[i] <= minVal) return NULL;
+        if(pre[i] >= maxVal) return NULL;
         TreeNode* root = new TreeNode(pre[i++]);
-        root->left = helper(pre, minVal, root->val, i);
-        root->right = helper(pre, root->val, maxVal, i);
+        root->left = helper(pre, root->val, i);
+        root->right = helper(pre, maxVal, i);
         return root;
     }
 
     TreeNode* bstFromPreorder(vector<int>& preorder) {
         int i=0;
-        return helper(preorder, LONG_MIN, LONG_MAX, i);
+        return helper(preorder, LONG_MAX, i);
     }
 };
