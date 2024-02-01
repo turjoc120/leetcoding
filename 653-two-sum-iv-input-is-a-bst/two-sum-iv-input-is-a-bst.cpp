@@ -20,10 +20,7 @@ public:
 
     int next(){
         TreeNode* temp = st.top(); st.pop();
-        if(isReverse && temp->left) 
-            pushAll(temp->left);
-        else if(!isReverse && temp->right)
-            pushAll(temp->right);
+        pushAll(isReverse ? temp->left : temp->right);
         return temp->val;
     }
 
@@ -31,8 +28,7 @@ private:
     void pushAll(TreeNode* root){
         if(root==NULL) return;
         st.push(root);
-        if(isReverse) pushAll(root->right);
-        else pushAll(root->left);
+        pushAll(isReverse ? root->right : root->left);
     }
 
 };
