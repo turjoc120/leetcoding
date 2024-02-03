@@ -11,30 +11,11 @@
  */
 class Solution {
 public:
-    int kthSmallest(TreeNode* root, int k) {
-        int count = 0, kthSmallest;
-        TreeNode* curr = root;
-
-        while(curr != NULL){
-            if(curr->left == NULL){
-                count++;
-                if(count == k) kthSmallest = curr->val;
-                curr = curr->right;
-            }
-            else{
-                TreeNode* pred = curr->left;
-                while(pred->right != NULL && pred->right != curr) pred = pred->right;
-                if(pred->right ==NULL){
-                    pred->right = curr;
-                    curr = curr->left;
-                }else{
-                    pred->right = NULL;
-                    count++;
-                    if(count == k) kthSmallest = curr->val;
-                    curr = curr->right;
-                }
-            }
-        }
-        return kthSmallest;
+    int kthSmallest(TreeNode* root, int &k) {
+        if(root==NULL) return -1;
+        int left = kthSmallest(root->left, k);
+        if(left != -1) return left;
+        if(--k == 0) return root->val;
+        return kthSmallest(root->right, k);
     }
 };
