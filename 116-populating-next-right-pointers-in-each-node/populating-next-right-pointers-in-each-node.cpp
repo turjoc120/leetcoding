@@ -19,15 +19,18 @@ public:
 class Solution {
 public:
     Node* connect(Node* root) {
-        if(root==NULL) return NULL;
-        if(root->left){
-            root->left->next = root->right;
-            if(root->next){
-                root->right->next = root->next->left;
+        if(!root)return NULL;
+        Node* dummy = root;
+        while(dummy->left){
+            Node* nxt = dummy;
+            while(nxt){
+                nxt->left->next = nxt->right;
+                if(nxt->next)
+                    nxt->right->next = nxt->next->left;
+                nxt = nxt->next;
             }
+            dummy = dummy->left;
         }
-        connect(root->left);
-        connect(root->right);
         return root;
     }
 };
