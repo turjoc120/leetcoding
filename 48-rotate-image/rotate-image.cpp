@@ -21,4 +21,9 @@ Flip Flip, all by myself - 48 ms
 
 Similar again, but I first transpose and then flip left-right instead of upside-down,
 and do it all by myself in loops. This one is 100% in-place again in the sense of just moving the elements.
+
+Flip Flip - 40 ms
+
+Basically the same as the first solution, but using reverse instead of [::-1] and transposing the matrix with loops instead of zip. It's 100% in-place,
+just instead of only moving elements around, it also moves the rows around.
 */
