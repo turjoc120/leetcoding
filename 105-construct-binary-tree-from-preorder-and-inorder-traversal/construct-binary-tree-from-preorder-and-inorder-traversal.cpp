@@ -11,19 +11,19 @@
  */
 class Solution {
 public:
-    TreeNode* helper(vector<int>& pre,unordered_map<int,int> &mp, int ps, int pe,int is, int ie){
-        if(ps > pe || is > ie) return NULL;
-        TreeNode* root = new TreeNode(pre[ps]);
-        int inRoot = mp[pre[ps]];
-        int leftItem = inRoot-is;
-        root->left = helper(pre, mp, ps+1, pe, is, inRoot-1);
-        root->right = helper(pre, mp, ps+leftItem+1, pe, inRoot+1, ie);
+    TreeNode* helper(vector<int>& pre,unordered_map<int,int>&mp, int &i, int pe, int is, int ie){
+        if(i > pe || is > ie) return NULL;
+        TreeNode* root = new TreeNode(pre[i]);
+        int inRoot = mp[pre[i++]];
+        root->left = helper(pre, mp, i, pe, is, inRoot-1);
+        root->right = helper(pre, mp, i, pe, inRoot+1, ie);
         return root;
     }
 
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        unordered_map<int,int> mp;
-        for(int i=0; i<inorder.size(); i++) mp[inorder[i]]=i;
-        return helper(preorder, mp, 0, preorder.size()-1, 0, inorder.size()-1);
+        unordered_map<int,int>mp;
+        for(int i = 0; i < inorder.size(); i++) mp[inorder[i]] = i;
+        int i = 0;
+        return helper(preorder,mp,i,preorder.size()-1, 0, inorder.size()-1);
     }
 };
