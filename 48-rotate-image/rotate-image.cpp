@@ -17,6 +17,11 @@ public:
 };
 
 /*
+Most Direct - 52 ms
+
+A 100% in-place solution. It even reads and writes each matrix element only once and doesn't even use an extra temporary variable to hold them. It walks over the "top-left quadrant" of the matrix and directly rotates each element with the three corresponding elements in the other three quadrants.
+Note that I'm moving the four elements in parallel and that [~i] is way nicer than [n-1-i].
+
 Clean Most Pythonic - 56 ms
 
 While the OJ accepts the above solution, the the result rows are actually tuples,
