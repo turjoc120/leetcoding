@@ -42,3 +42,23 @@ Flip Flip - 40 ms
 Basically the same as the first solution, but using reverse instead of [::-1] and transposing the matrix with loops instead of zip. It's 100% in-place,
 just instead of only moving elements around, it also moves the rows around.
 */
+
+class Solution
+{
+public:
+    void rotate(vector<vector<int>> &matrix)
+    {
+        int row = matrix.size();
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j <= i; j++)
+            {
+                swap(matrix[i][j], matrix[j][i]);
+            }
+        }
+        for (int i = 0; i < row; i++)
+        {
+            reverse(matrix[i].begin(), matrix[i].end());
+        }
+    }
+};
