@@ -17,6 +17,12 @@ public:
 };
 
 /*
+
+Almost as Direct - 40 ms
+
+If you don't like the little repetitive code of the above "Most Direct" solution,
+ we can instead do each four-cycle of elements by using three swaps of just two elements.
+
 Flip Flip, all by myself - 48 ms
 
 Similar again, but I first transpose and then flip left-right instead of upside-down,
