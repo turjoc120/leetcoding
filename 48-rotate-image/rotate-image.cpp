@@ -17,6 +17,10 @@ public:
 };
 
 /*
+Clean Most Pythonic - 56 ms
+
+While the OJ accepts the above solution, the the result rows are actually tuples,
+ not lists, so it's a bit dirty. To fix this, we can just apply list to every row:
 
 Almost as Direct - 40 ms
 
