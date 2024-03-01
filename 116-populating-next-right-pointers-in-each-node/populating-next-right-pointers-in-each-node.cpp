@@ -20,16 +20,15 @@ class Solution {
 public:
     Node* connect(Node* root) {
         if(!root)return NULL;
-        Node* dummy = root;
-        while(dummy->left){
-            Node* nxt = dummy;
+        Node* curr = root;
+        while(curr->left){
+            Node* nxt = curr;
             while(nxt){
                 nxt->left->next = nxt->right;
-                if(nxt->next)
-                    nxt->right->next = nxt->next->left;
+                if(nxt->next) nxt->right->next = nxt->next->left;
                 nxt = nxt->next;
             }
-            dummy = dummy->left;
+            curr = curr->left;
         }
         return root;
     }
