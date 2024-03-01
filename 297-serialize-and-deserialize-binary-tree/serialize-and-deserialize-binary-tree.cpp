@@ -13,18 +13,18 @@ public:
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
         if(root == NULL) return "#";
-        return to_string(root->val)+"," + serialize(root->left) + "," + serialize(root->right);
+        return to_string(root->val) + "," + serialize(root->left) + "," + serialize(root->right);
     }
 
     // Decodes your encoded data to tree.
     TreeNode* helper(stringstream &s){
         string str;
-        getline(s, str,',');
+        getline(s, str, ',');
         if(str == "#") return NULL;
         TreeNode* root = new TreeNode(stoi(str));
-        root->left = helper(s);
+        root->left = helper(s);    
         root->right = helper(s);
-        return root;
+        return root;    
     }
 
     TreeNode* deserialize(string data) {
