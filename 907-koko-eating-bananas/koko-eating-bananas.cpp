@@ -1,12 +1,11 @@
 class Solution {
 public:
-    bool totalHours(vector<int> piles, int mid, int h){
+    long long totalHours(vector<int> piles, long long mid){
         long long hours = 0;
         for(auto i: piles){
             hours += ceil((double)i / (double)mid);
-            if(hours > h) return false;
         }
-        return hours <= h;
+        return hours;
     }
 
     int minEatingSpeed(vector<int>& piles, int h) {
@@ -16,7 +15,8 @@ public:
         while(start <= end){
             long long mid = start + (end - start) / 2;
             //decrese the eating amount
-            if(totalHours(piles, mid, h)) end = mid - 1;
+            long long val =totalHours(piles, mid);
+            if(val <= h) end = mid - 1;
             //increase the eating amount 
             else start = mid + 1;
         }     
