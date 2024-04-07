@@ -70,3 +70,28 @@ public:
         return ops;
     }
 };
+
+// monotonic subarray
+int longestMonotonicSubarray(vector<int> &nums)
+{
+    int inC = 1, deC = 1, ans1 = 0, ans2 = 0, n = nums.size();
+
+    for (int i = 0; i < n; i++)
+    {
+        if (i + 1 < n && nums[i] < nums[i + 1])
+            inC++;
+        else
+        {
+            ans1 = max(ans1, inC);
+            inC = 1;
+        }
+        if (i + 1 < n && nums[i] > nums[i + 1])
+            deC++;
+        else
+        {
+            ans2 = max(deC, ans2);
+            deC = 1;
+        }
+    }
+    return ans1 > ans2 ? ans1 : ans2;
+}
