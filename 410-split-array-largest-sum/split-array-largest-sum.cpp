@@ -10,7 +10,7 @@ public:
             }
         }
 
-        if(pages <= mid) k--;
+         k--;
         if(k < 0) return false;
         return true;
     }
