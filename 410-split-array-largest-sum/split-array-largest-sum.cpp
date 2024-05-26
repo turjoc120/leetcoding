@@ -1,36 +1,33 @@
 class Solution {
 public:
+    bool feasible(vector<int> &nums, int mid, int k){
+        int pages = 0;
+        for(auto i: nums){
+            if(pages + i <= mid) pages+=i;
+            else{
+                k--;
+                pages = i;
+            }
+        }
 
-int countStudents(vector<int> &arr, int pages) {
-    int n = arr.size(); //size of array.
-    int students = 1;
-    long long pagesStudent = 0;
-    for (int i = 0; i < n; i++) {
-        if (pagesStudent + arr[i] <= pages) {
-            //add pages to current student
-            pagesStudent += arr[i];
-        }
-        else {
-            //add pages to next student
-            students++;
-            pagesStudent = arr[i];
-        }
+        if(pages <= mid) k--;
+        if(k < 0) return false;
+        return true;
     }
-    return students;
-}
-    int splitArray(vector<int>& arr, int m) {
-         int low = *max_element(arr.begin(), arr.end());
-    int high = accumulate(arr.begin(), arr.end(), 0);
-    while (low <= high) {
-        int mid = (low + high) / 2;
-        int students = countStudents(arr, mid);
-        if (students > m) {
-            low = mid + 1;
+
+    int splitArray(vector<int>& nums, int k) {
+        int start = -1, end = 0;
+        for(auto i: nums){
+            start = max(start, i);
+            end += i;
         }
-        else {
-            high = mid - 1;
-        }
-    }
-    return low;
+
+        while(start <= end){
+            int mid = start + (end - start) /2;
+            if(feasible(nums, mid, k)) end = mid - 1;
+            else start = mid + 1;
+        } 
+
+        return start;
     }
 };
