@@ -9,27 +9,29 @@ using namespace std;
 
 class Solution {
 public:
-    bool feasible(vector<int> stalls, int k, int mid){
-        int lastPos = stalls[0];
-        for(int i = 1; i<stalls.size(); i++){
-            if(stalls[i] - lastPos >= mid){
+    bool feasible(vector<int> &stalls, int mid, int k){
+        int last = stalls[0];
+        for(int i = 1; i < stalls.size(); i++){
+            if(stalls[i] - last >= mid){
+                last = stalls[i];
                 k--;
-                lastPos = stalls[i];
             }
-            if(k <= 0) break;
+            if(k<=0) break;
         }
         return k == 0;
     }
     
     int solve(int n, int k, vector<int> &stalls) {
         sort(stalls.begin(), stalls.end());
-        int start = 1, end = stalls[n-1];
+        
+        int start = 0, end = stalls[n-1] - stalls[0];
         
         while(start <= end){
             int mid = start + (end - start) / 2;
-            if(feasible(stalls, k-1 , mid)) start = mid + 1;
+            if(feasible(stalls, mid, k-1)) start = mid +1;
             else end = mid - 1;
         }
+        
         return end;
         
     }
